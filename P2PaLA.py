@@ -715,9 +715,12 @@ def main():
                         state, True, opts, logger, epoch, criterion=opts.g_loss
                     )
                     logger.info(
-                        "Epoch: {}	Train loss: {}	Validation loss: {}".format(epoch, epoch_lossG, val_loss)
+                        "New best model, from {} to {}".format(best_tr, epoch_lossG)
                     )
                     best_tr = epoch_lossG
+            logger.info(
+                "Epoch: {}      Train loss: {}  Validation loss: {}".format(epoch, epoch_lossG, val_loss)
+            )
             # --- Save checkpoint
             if epoch % opts.save_rate == 0 or epoch == opts.epochs - 1:
                 # --- save current model, to test load func
