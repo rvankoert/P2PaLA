@@ -291,6 +291,9 @@ def main():
     logger.debug(in_args)
     # --- set device
     device = torch.device("cuda" if opts.use_gpu else "cpu")
+    if (opts.use_gpu):
+        print (opts.gpu)
+        torch.cuda.set_device(int(opts.gpu))
     # --- Init torch random
     # --- This two are suposed to be merged in the future, for now keep boot
     torch.manual_seed(opts.seed)
@@ -694,7 +697,7 @@ def main():
                         state, True, opts, logger, epoch, criterion="val" + opts.g_loss
                     )
                     logger.info(
-                        "New best model, from {} to {}".format(best_val, val_loss)
+                        "New best model validation loss, from {} to {}".format(best_val, val_loss)
                     )
                     best_val = val_loss
             else:
@@ -712,7 +715,7 @@ def main():
                         state, True, opts, logger, epoch, criterion=opts.g_loss
                     )
                     logger.info(
-                        "New best model, from {} to {}".format(best_tr, epoch_lossG)
+                        "Epoch: {}	Train loss: {}	Validation loss: {}".format(epoch, epoch_lossG, val_loss)
                     )
                     best_tr = epoch_lossG
             # --- Save checkpoint
