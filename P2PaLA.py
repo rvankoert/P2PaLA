@@ -700,6 +700,9 @@ def main():
                         "New best model validation loss, from {} to {}".format(best_val, val_loss)
                     )
                     best_val = val_loss
+                logger.info(
+                    "Epoch: {}      Train loss: {}  Validation loss: {}".format(epoch, epoch_lossG, val_loss)
+                )
             else:
                 if best_tr >= epoch_lossG:
                     best_epoch = epoch
@@ -718,9 +721,12 @@ def main():
                         "New best model, from {} to {}".format(best_tr, epoch_lossG)
                     )
                     best_tr = epoch_lossG
-            logger.info(
-                "Epoch: {}      Train loss: {}  Validation loss: {}".format(epoch, epoch_lossG, val_loss)
-            )
+                logger.info(
+                    "Epoch: {}      Train loss: {} ".format(epoch, epoch_lossG)
+                )
+
+
+
             # --- Save checkpoint
             if epoch % opts.save_rate == 0 or epoch == opts.epochs - 1:
                 # --- save current model, to test load func
